@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react";
 import { appContext } from "../context/appContext";
 import { useParams, useRouter } from "next/navigation";
 import { routes } from "../utils/routes";
-
+import {toast} from 'react-hot-toast'
 const useCreateHook = () => {
   const router = useRouter();
   const params = useParams();
@@ -39,12 +39,14 @@ const useCreateHook = () => {
         setTaskList(newTaskList)
       }
       router.push(routes.home)
+      toast.success('Task updated')
     }else{
       const id = new Date().getTime().toString();
       const date = new Date().toDateString();
       setTaskList([...taskList,{title,description,id,date,isDone:false}])
       router.push(routes.home)
       setIsEdit(false)
+      toast.success('Tast created')
     }
   };
   useEffect(()=>{

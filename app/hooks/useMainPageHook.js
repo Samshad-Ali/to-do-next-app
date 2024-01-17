@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { appContext } from "../context/appContext"
-
+import {toast} from 'react-hot-toast'
 const useMainPageHook = () => {
     const {taskList,setTaskList,setIsEdit,setIsDone} = useContext(appContext);
     const [searchValue,setSearchValue] = useState('');
@@ -18,6 +18,7 @@ const useMainPageHook = () => {
             let newTaskList = [...taskList];
             newTaskList.splice(isTask,1);
             setTaskList(newTaskList);
+            toast.success('Tast Deleted')
         }
     }
     const handleCompleteBtn=(id)=>{
@@ -28,6 +29,7 @@ const useMainPageHook = () => {
             return data;
         })
         setTaskList(updatedTask);
+        toast.success('Tast Completed')
     }
 
     const handleSearch = (e) =>{
@@ -37,9 +39,6 @@ const useMainPageHook = () => {
     useEffect(()=>{
         localStorage.setItem('task',JSON.stringify(taskList))
     },[taskList])
-    useEffect(()=>{
-       taskList.filter((item)=>item.title.includes(searchValue))
-    },[searchValue])
   return{
     handleEditBtn,
     handleDeleteBtn,
